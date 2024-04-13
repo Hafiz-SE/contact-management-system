@@ -28,3 +28,17 @@ export default {
 - Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
 - Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
 - Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+
+
+# Dockerization
+Firstly, Build our image.
+
+```docker build -t hafizz/todo-react-frontend:1.0 .```
+
+Now, We can see our image using `docker images` command.
+
+Lets run our image via following command 
+
+```docker run -d -p 4000:80 --name todo-react-frontend todo-react-frontend:1.0```
+
+Now, We can see our running container using `docker ps` command.
