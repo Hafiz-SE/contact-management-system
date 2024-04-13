@@ -51,6 +51,5 @@ async def delete_todo(todo_id: UUID):
 async def update_todo(todo: ToDo):
     for idx, db_todo in enumerate(db): 
         if todo.id == db_todo.id:
-            todo.id = db_todo.id
             db[idx] = todo  
     return {"error": "Todo not found"}
