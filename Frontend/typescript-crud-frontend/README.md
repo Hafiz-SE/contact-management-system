@@ -39,6 +39,6 @@ Now, We can see our image using `docker images` command.
 
 Lets run our image via following command 
 
-```docker run -d -p 4000:80 --name todo-react-frontend todo-react-frontend:1.0```
+```docker run -d -p 4000:80 --name todo-react-frontend hafizz/todo-react-frontend:1.0```
 
 Now, We can see our running container using `docker ps` command.
