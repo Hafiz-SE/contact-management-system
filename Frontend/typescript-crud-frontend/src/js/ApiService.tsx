@@ -24,3 +24,20 @@ export const registerTodo = async (todo: Todo): Promise<Todo> => {
         throw new Error('Error posting todo');
     }
 };
+
+export const updateTodo = async (todo: Todo): Promise<Todo> => {
+    try {
+        const response: AxiosResponse<Todo> = await axios.put<Todo>('/edit', todo);
+        return response.data;
+    } catch (error) {
+        throw new Error('Error updating todo');
+    }
+};
+
+export const deleteTodo = async (todo: Todo): Promise<void> => {
+    try {
+        await axios.delete(`/id/${todo.id}`);
+    } catch (error) {
+        throw new Error('Error deleting todo');
+    }
+};

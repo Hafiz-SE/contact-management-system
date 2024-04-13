@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { fetchTodoList, Todo, registerTodo } from './../js/ApiService';
+import { fetchTodoList, Todo, registerTodo, updateTodo, deleteTodo } from './../js/ApiService';
 import TodoModal from './TodoModal';
 
 const TodoList: React.FC = () => {
@@ -33,6 +33,20 @@ const TodoList: React.FC = () => {
         setIsCreating(false); // Set to false when editing an existing todo
     };
 
+    const handleDeleteTodo = async (todo: Todo) => {
+        try {
+            // Call the deleteTodo method with the todo id
+            await deleteTodo(todo);
+
+            // Filter out the deleted todo from the todos list
+            const updatedTodos = todos.filter(t => t.id !== todo.id);
+            setTodos(updatedTodos);
+        } catch (error) {
+            console.error('Error deleting todo:', error);
+        }
+
+    };
+
     const handleCloseModal = () => {
         setShowModal(false);
     };
@@ -42,7 +56,6 @@ const TodoList: React.FC = () => {
             if (isCreating) {
                 const newTodoId = await registerTodo(todo); // Assuming registerTodo returns the new todo id
 
-                // Create a new todo object with the id from the backend and other properties from the original todo
                 const newTodo: Todo = {
                     id: newTodoId.id,
                     description: todo.description,
@@ -50,14 +63,12 @@ const TodoList: React.FC = () => {
                     priority: todo.priority
                 };
 
-                // Update the todos state with the new todo
                 setTodos([...todos, newTodo]);
-                setShowModal(false);
             }
             else {
-                // await updateTodo(todo);
-                // const updatedTodos = todos.map(t => t.id === todo.id ? todo : t);
-                // setTodos(updatedTodos);
+                await updateTodo(todo);
+                const updatedTodos = todos.map(t => t.id === todo.id ? todo : t);
+                setTodos(updatedTodos);
             }
             setShowModal(false);
         } catch (error) {
@@ -67,7 +78,7 @@ const TodoList: React.FC = () => {
 
     const getPriorityColor = (todo: Todo) => {
         if (todo.isCompleted) {
-            return '#eff1f3'; // Color for completed todos
+            return '#eff1f3';
         } else {
             switch (todo.priority) {
                 case 'Low':
@@ -105,7 +116,7 @@ const TodoList: React.FC = () => {
                             <button className="btn btn-primary" style={{ backgroundColor: 'transparent', color: 'black' }} onClick={() => handleEditTodo(todo)}>
                                 <i className="fas fa-edit"></i>
                             </button>
-                            <button className="btn btn-primary" style={{ backgroundColor: 'transparent', color: 'black' }}>
+                            <button className="btn btn-primary" style={{ backgroundColor: 'transparent', color: 'black' }} onClick={() => handleDeleteTodo(todo)}>
                                 <i className="fas fa-trash-alt"></i>
                             </button>
                         </div>

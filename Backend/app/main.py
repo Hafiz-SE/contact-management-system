@@ -49,7 +49,12 @@ async def delete_todo(todo_id: UUID):
 
 @app.put("/edit")
 async def update_todo(todo: ToDo):
+    isFound: bool = False
     for idx, db_todo in enumerate(db): 
         if todo.id == db_todo.id:
-            db[idx] = todo  
-    return {"error": "Todo not found"}
+            db[idx] = todo
+            isFound = True
+            return todo
+    
+    if isFound == False:        
+        return {"error": "Todo not found"}
