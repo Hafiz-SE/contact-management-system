@@ -9,17 +9,17 @@ const TodoList: React.FC = () => {
     const [isCreating, setIsCreating] = useState(false); // New state to track if we are creating or editing a todo
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const todoList = await fetchTodoList();
-                setTodos(todoList);
-            } catch (error) {
-                console.error('Error fetching todos:', error);
-            }
-        };
-
         fetchData(); // Call the API when component mounts
     }, []);
+
+    const fetchData = async () => {
+        try {
+            const todoList = await fetchTodoList();
+            setTodos(todoList);
+        } catch (error) {
+            console.error('Error fetching todos:', error);
+        }
+    };
 
     const handleNewTodoClick = () => {
         setShowModal(true);
