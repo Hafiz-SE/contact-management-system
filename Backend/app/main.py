@@ -2,8 +2,17 @@ from typing import List
 from uuid import UUID, uuid4
 from fastapi import FastAPI
 from models import Priority, ToDo
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 db: List[ToDo] = [
     ToDo(id = uuid4(), 
