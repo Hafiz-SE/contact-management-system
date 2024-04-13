@@ -1,5 +1,5 @@
 import ListGroup from "./components/ListGroup";
 function App() {
-  return <><ListGroup></ListGroup></>
+  return <ListGroup />;
 }
 export default App;

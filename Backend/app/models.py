@@ -9,8 +9,12 @@ class Priority(str, Enum):
     low = "Low"
 
 class ToDo(BaseModel):
-    id: Optional[UUID] = uuid4()
+    id: Optional[UUID] = None  # Default value is None
     description: str
     isCompleted: bool
     priority: Priority
-    
+
+    def __init__(self, **data):
+        super().__init__(**data)
+        if self.id is None:
+            self.id = uuid4()

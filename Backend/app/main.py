@@ -33,6 +33,8 @@ async def fetch_todo():
 async def register_todo(todo: ToDo): 
     for db_todo in db: 
         if (todo.id == db_todo.id):
+                print(todo.id)
+                print(db_todo.id)
                 return {"error": "Todo id exists"}
     db.append(todo)
     return {"id" : todo.id}
