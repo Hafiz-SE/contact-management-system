@@ -4,8 +4,8 @@ import App from './App.tsx'
 import 'bootstrap/dist/css/bootstrap.css'
 import axios from 'axios'
 
-axios.defaults.baseURL = "http://localhost:8080"
-
+console.log('VITE_BACKEND_URL = ', import.meta.env.VITE_BACKEND_URL)
+axios.defaults.baseURL = import.meta.env.VITE_BACKEND_URL || "http://localhost:8080"
 axios.interceptors.request.use(request => {
   console.log("axios call request = ", request);
   return request;

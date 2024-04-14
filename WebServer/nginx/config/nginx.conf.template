@@ -1,0 +1,28 @@
+events {
+    # empty placeholder
+}
+
+
+http {
+
+    server {
+        listen 80;
+
+        location / {
+            proxy_pass http://frontend;
+        }
+
+        location /api/ {
+            rewrite ^/api/(.*)$ /$1 break;
+            proxy_pass http://backend;
+        }
+    }
+
+    upstream frontend {
+        server todo-frontend:${FRONTEND_INTERNAL_PORT};
+    }
+
+    upstream backend {
+        server todo-backend:${BACKEND_INTERNAL_PORT};
+    }
+}

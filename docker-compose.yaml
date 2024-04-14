@@ -1,0 +1,50 @@
+version: '3'
+
+services:
+
+  todo-frontend:
+    container_name: "todo-react-frontend"
+    build:
+      context: ./Frontend/typescript-crud-frontend/.
+      dockerfile: Dockerfile
+      args:
+        VITE_BACKEND_URL: ${VITE_BACKEND_URL}
+    # environment:
+    #   - VITE_BACKEND_URL=${VITE_BACKEND_URL}
+    networks:
+      - todo-network
+    depends_on:
+      - todo-backend
+
+  todo-backend:
+    container_name: "todo-python-backend"
+    build:
+      context: ./Backend/.
+      dockerfile: Dockerfile
+      args:
+        BACKEND_INTERNAL_PORT: ${BACKEND_INTERNAL_PORT}
+    networks:
+      - todo-network
+    # environment:
+    #   - BACKEND_INTERNAL_PORT=${BACKEND_INTERNAL_PORT}
+
+  nginx:
+    container_name: todo-nginx
+    build:
+      context: ./WebServer/nginx/.
+      dockerfile: Dockerfile
+    ports:
+      - ${NGINX_EXTERNAL_PORT}:${NGINX_INTERNAL_PORT}
+    environment:
+      - FRONTEND_INTERNAL_PORT=${FRONTEND_INTERNAL_PORT}
+      - BACKEND_INTERNAL_PORT=${BACKEND_INTERNAL_PORT}
+    networks:
+      - todo-network
+    depends_on:
+      - todo-frontend
+      - todo-backend
+
+networks:
+
+  todo-network:
+    driver: bridge

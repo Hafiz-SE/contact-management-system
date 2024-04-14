@@ -16,5 +16,9 @@ COPY ./app /code/app
 #
 WORKDIR /code/app
 
-# 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]
+ARG BACKEND_INTERNAL_PORT=8080
+ENV BACKEND_INTERNAL_PORT=$BACKEND_INTERNAL_PORT
+
+EXPOSE ${BACKEND_INTERNAL_PORT}
+
+CMD [ "sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${BACKEND_INTERNAL_PORT}" ]
