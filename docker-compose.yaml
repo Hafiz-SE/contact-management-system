@@ -9,8 +9,6 @@ services:
       dockerfile: Dockerfile
       args:
         VITE_BACKEND_URL: ${VITE_BACKEND_URL}
-    # environment:
-    #   - VITE_BACKEND_URL=${VITE_BACKEND_URL}
     networks:
       - todo-network
     depends_on:
@@ -25,8 +23,6 @@ services:
         BACKEND_INTERNAL_PORT: ${BACKEND_INTERNAL_PORT}
     networks:
       - todo-network
-    # environment:
-    #   - BACKEND_INTERNAL_PORT=${BACKEND_INTERNAL_PORT}
 
   nginx:
     container_name: todo-nginx
